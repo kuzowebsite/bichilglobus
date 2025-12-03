@@ -9,28 +9,28 @@ const slides = [
     number: '01',
     category: 'Хашаа барьцаалсан зээл',
     title: 'Тогтвортой, уян хатан нөхцөлтэй зээл',
-    image: 'house.webp',
+    image: '/house.webp',
   },
   {
     id: 2,
     number: '02',
     category: 'Автомашин авах зээл',
     title: 'Газар барьцаалсан зээл',
-    image: 'gazarzeel.jpg',
+    image: '/gazarzeel.jpg',
   },
   {
     id: 3,
     number: '03',
     category: 'ХБҮЦ',
     title: 'Жижиг дунд бизнесийг дэмжих',
-    image: 'jijigdund.png',
+    image: '/jijigdund.png',
   },
   {
     id: 4,
     number: '04',
     category: 'Бизнес зээл',
     title: 'Таны бизнесийг дэмжинэ',
-    image: 'taniibusdemj.jpg',
+    image: '/taniibusdemj.jpg',
   }
 ];
 
@@ -154,4 +154,5 @@ export default function HeroSlider() {
       </div>
     </div>
   );
+
 }
