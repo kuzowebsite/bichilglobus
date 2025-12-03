@@ -1,0 +1,259 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* MZA Carousel Custom Styles */
+.mzaCarousel {
+  position: relative;
+  height: 600px; /* Өндрийг фикс болгов */
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  contain: layout paint;
+  touch-action: pan-y; /* Scroll хийх боломжтой болгох */
+  --mzaC-fg: #e7ecf2;
+  --mzaC-accent: #14b8a6; /* Teal өнгөөр солив */
+  --mzaC-accent2: #0d9488;
+  --mzaC-glass: rgba(255, 255, 255, 0.06);
+  --mzaC-glow: rgba(20, 184, 166, 0.5);
+  --mzaC-slideW: min(880px, 80vw);
+  --mzaC-peek: 0.15;
+  --mzaPagH: 50px;
+  --mzaCardH: 450px;
+}
+
+.mzaCarousel-viewport {
+  position: relative;
+  outline: none;
+  overflow: hidden;
+  height: 100%;
+  cursor: grab;
+}
+.mzaCarousel-viewport:active {
+  cursor: grabbing;
+}
+
+.mzaCarousel-track {
+  position: relative;
+  height: 100%;
+  transform-style: preserve-3d;
+  perspective: 1200px;
+}
+
+.mzaCarousel-slide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--mzaC-slideW);
+  height: var(--mzaCardH);
+  transform-style: preserve-3d;
+  display: grid;
+  place-items: center;
+  border-radius: 22px;
+  will-change: transform, filter;
+  /* Төвлөрүүлэх */
+  margin-top: calc(var(--mzaCardH) / -2);
+  margin-left: calc(var(--mzaC-slideW) / -2);
+}
+
+.mzaCard {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+  background: var(--mzaC-glass);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  backdrop-filter: saturate(120%) blur(4px);
+  transform: translateZ(0);
+}
+
+.mzaCard::before {
+  content: "";
+  position: absolute;
+  inset: -5%;
+  background-image: var(--mzaCard-bg);
+  background-size: cover;
+  background-position: center;
+  filter: contrast(1.02) saturate(1.08) brightness(0.7);
+  transform: translateZ(-60px) scale(1.2) translate3d(var(--mzaParBgX, 0px), var(--mzaParBgY, 0px), 0);
+  transition: transform 800ms cubic-bezier(0.2, 0.7, 0, 1), filter 800ms cubic-bezier(0.2, 0.7, 0, 1);
+}
+
+.mzaCard-head {
+  position: absolute;
+  inset: auto auto 30px 30px; /* Байршлыг доош нь болгосон */
+  z-index: 2;
+  max-width: 80%;
+}
+
+.mzaCard-title {
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(24px, 4vw, 42px);
+  text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.8);
+  line-height: 1.1;
+  color: white;
+}
+
+.mzaCard-kicker {
+  margin: 0.5rem 0;
+  color: var(--mzaC-accent);
+  font-size: clamp(14px, 2vw, 16px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.8);
+}
+
+.mzaCard-text {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  z-index: 2;
+  max-width: 280px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #ddd;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.mzaCard-icon {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 60px;
+  height: 60px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(5px);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mzaC-accent);
+  z-index: 2;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Controls */
+.mzaCarousel-controls {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  padding: 0 20px;
+}
+.mzaCarousel-prev,
+.mzaCarousel-next {
+  pointer-events: auto;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+  color: white;
+  font-size: 24px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+.mzaCarousel-prev:hover, .mzaCarousel-next:hover {
+  background: var(--mzaC-accent);
+  color: black;
+}
+
+/* Pagination Dots */
+.mzaCarousel-pagination {
+  position: absolute;
+  bottom: 20px;
+  left: 0; 
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  z-index: 10;
+}
+.mzaCarousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.mzaCarousel-dot[aria-selected="true"] {
+  background: var(--mzaC-accent);
+  transform: scale(1.3);
+}
+
+/* Progress Bar */
+.mzaCarousel-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  z-index: 20;
+}
+.mzaCarousel-progressBar {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--mzaC-accent);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* Active Slide Styles */
+.mzaCarousel-slide[data-state="active"] .mzaCard::before {
+  filter: contrast(1.1) saturate(1.2) brightness(1);
+}
+.mzaCarousel-slide[data-state="active"] .mzaCard {
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.1) inset;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .mzaCard-text { display: none; }
+  .mzaCard-head { bottom: 20px; left: 20px; }
+  .mzaCard-icon { top: 20px; left: 20px; width: 40px; height: 40px; }
+  .mzaCarousel-prev, .mzaCarousel-next { width: 40px; height: 40px; font-size: 18px; }
+}
